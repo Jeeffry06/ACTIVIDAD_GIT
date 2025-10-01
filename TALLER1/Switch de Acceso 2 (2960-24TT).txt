@@ -1,0 +1,59 @@
+hostname Switch_Acceso_2
+no ip domain-lookup
+enable secret acceso123
+service password-encryption
+
+! VTP cliente
+vtp mode client
+vtp version 2
+vtp domain RedEmpresa
+vtp password vtp123
+
+! VLAN de Servidores
+interface vlan 10
+ ip address 192.168.10.2 255.255.255.0
+ no shutdown
+
+! VLAN de Usuarios
+interface vlan 20
+ ip address 192.168.20.2 255.255.255.0
+ no shutdown
+
+! VLAN de administración
+interface vlan 30
+ ip address 192.168.30.2 255.255.255.0
+ no shutdown
+
+! VLAN de TI
+interface vlan 40
+ ip address 192.168.40.2 255.255.255.0
+ no shutdown
+
+! Enlace troncal hacia distribución
+interface g0/1
+ description Enlace a SW_Distribucion_2
+ switchport mode trunk
+
+! Asignación de VLANs a puertos de usuarios
+interface range g0/2 - 0/5
+ switchport mode access
+ switchport access vlan 20
+
+interface range g0/6 - 0/10
+ switchport mode access
+ switchport access vlan 30
+
+interface range g0/11 - 0/15
+ switchport mode access
+ switchport access vlan 40
+
+! Seguridad
+line console 0
+ password cons123
+ login
+ exec-timeout 5
+
+line vty 0 4
+ password vty123
+ login
+ transport input ssh

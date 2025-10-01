@@ -1,0 +1,3 @@
+host;device_type;hostname;username;password;enable_password;banner_motd;interface;description;vlan;vlan_name;ip_address;subnet_mask;default_gateway
+192.168.0.201;switch;KYJSW;kyj;qwerty;qwerty;¡Acceso autorizado solamente!;FastEthernet0/1;PC Ventas;10;Ventas;192.168.0.204;255.255.255.0;192.168.0.200
+192.168.0.200;router;KYJR;kyj;qwerty;qwerty;¡Acceso autorizado solamente!;GigabitEthernet0/1;Enlace LAN;;;192.168.0.202;255.255.255.0;200.10.10.1.1

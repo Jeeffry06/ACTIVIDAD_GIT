@@ -1,0 +1,61 @@
+hostname Switch_Core
+no ip domain-lookup
+enable secret core123
+service password-encryption
+
+! VTP en modo servidor
+vtp mode server
+vtp version 2
+vtp domain RedEmpresa
+vtp password vtp123
+
+! Creación de VLANs
+vlan 10
+ name Servidores
+vlan 20
+ name Usuarios
+vlan 30
+ name Administracion
+vlan 40
+ name TI
+
+! Configuración de SVI (Inter-VLAN Routing)
+interface vlan 10
+ ip address 192.168.10.1 255.255.255.0
+ no shutdown
+
+interface vlan 20
+ ip address 192.168.20.1 255.255.255.0
+ no shutdown
+
+interface vlan 30
+ ip address 192.168.30.1 255.255.255.0
+ no shutdown
+
+interface vlan 40
+ ip address 192.168.40.1 255.255.255.0
+ no shutdown
+
+! Conexión al Router Perimetral
+interface g0/1
+ description Enlace a Router_Perimetral
+ switchport mode trunk
+
+! Conexiones a switches de distribución
+interface range g0/2 - 0/3
+ description Troncales hacia Distribucion
+ switchport mode trunk
+
+! Activar enrutamiento
+ip routing
+
+! Seguridad
+line console 0
+ password cons123
+ login
+ exec-timeout 5
+
+line vty 0 4
+ password vty123
+ login
+ transport input ssh

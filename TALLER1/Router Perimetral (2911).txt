@@ -1,0 +1,57 @@
+! Configuración básica
+hostname Router_Perimetral
+no ip domain-lookup
+enable secret cisco123
+service password-encryption
+banner motd # ACCESO RESTRINGIDO - SOLO PERSONAL AUTORIZADO #
+
+! Interfaz hacia ISP
+interface g0/0
+ description Enlace hacia ISP
+ ip address 200.1.1.2 255.255.255.252
+ no shutdown
+
+! Interfaz hacia el Switch Core
+interface g0/1
+ description Enlace hacia Switch Core
+ no ip address
+ no shutdown
+
+! Interfaz hacia el Switch Core
+interface g0/1.10
+ description Enlace hacia Switch Core
+ encapsulation dot1Q 10
+ ip address 192.168.10.1 255.255.255.0
+ no shutdown
+
+! Interfaz hacia el Switch Core
+interface g0/1.20
+ description Enlace hacia Switch Core
+ encapsulation dot1Q 20
+ ip address 192.168.20.1 255.255.255.0
+ no shutdown
+
+! Interfaz hacia el Switch Core
+interface g0/1.30
+ description Enlace hacia Switch Core
+ encapsulation dot1Q 30
+ ip address 192.168.30.1 255.255.255.0
+ no shutdown
+
+! Interfaz hacia el Switch Core
+interface g0/1.40
+ description Enlace hacia Switch Core
+ encapsulation dot1Q 40
+ ip address 192.168.40.1 255.255.255.0
+ no shutdown
+
+! Seguridad
+line console 0
+ password cons123
+ login
+ exec-timeout 5
+
+line vty 0 4
+ password vty123
+ login
+ transport input ssh
